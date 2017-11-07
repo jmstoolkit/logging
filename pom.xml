@@ -1,6 +1,6 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.jmstoolkit.logging</groupId>
+  <groupId>com.jmstoolkit</groupId>
   <artifactId>logging</artifactId>
   <version>1.0.0</version>
   <properties>
@@ -8,6 +8,12 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <repositories>
+    <repository>
+      <id>orson</id>
+      <url>file:///${project.basedir}/orson</url>
+    </repository>
+  </repositories>
   <build>
     <resources>
       <resource>
