@@ -28,7 +28,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
-import org.jfree.chart.util.SortOrder;
+import org.jfree.util.SortOrder;
 import com.jmstoolkit.logging.JTKLogRecord;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
