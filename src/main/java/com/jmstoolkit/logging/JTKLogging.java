@@ -15,7 +15,6 @@
 package com.jmstoolkit.logging;
 
 import java.util.Properties;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Level;

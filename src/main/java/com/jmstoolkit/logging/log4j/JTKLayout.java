@@ -14,6 +14,8 @@
  */
 package com.jmstoolkit.logging.log4j;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -34,6 +36,15 @@ public class JTKLayout extends Layout {
     final StringBuilder xml = new StringBuilder();
     xml.append("<log>\n");
     xml.append("<record>\n");
+    xml.append("<hostname>");
+    String hostname = "unknown";
+    try {
+      hostname = InetAddress.getLocalHost().getHostName();
+    } catch (UnknownHostException ex) {
+      //System.out.println("Couldn't get hostname: " + ex.getMessage());
+    }
+    xml.append(hostname);
+    xml.append("</hostname>");
     xml.append("<date>");
     synchronized (DATE) {
       xml.append(DATE.format(new Date(event.getTimeStamp())));

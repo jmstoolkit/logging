@@ -69,11 +69,7 @@ public class JTKAppender extends AppenderSkeleton {
           System.getProperty("jmstoolkit.destination")));
 
 
-    } catch (JTKException e) {
-
-    } catch (NamingException e) {
-
-    } catch (JMSException e) {
+    } catch (JTKException | NamingException | JMSException e) {
 
     }
   }
@@ -89,6 +85,7 @@ public class JTKAppender extends AppenderSkeleton {
     }
   }
 
+  @Override
   public final void close() {
     try {
       session.close();
@@ -101,6 +98,7 @@ public class JTKAppender extends AppenderSkeleton {
    * This appender uses the JTKLayout exclusively.
    * @return false
    */
+  @Override
   public final boolean requiresLayout() {
     return false;
   }
