@@ -47,7 +47,7 @@ public class JTKPieChartDataset implements Serializable, MessageListener {
   private DefaultPieDataset pieDataset = new DefaultPieDataset();
   private PropertyChangeSupport propertySupport;
   /** Store count of types of messages. When handling logger output, key = "log level". */
-  private Map<String, Integer> typeCount = new HashMap<String, Integer>();
+  private Map<String, Integer> typeCount = new HashMap<>();
   private JTKLogRecord record;
 
   public JTKPieChartDataset() {
@@ -88,6 +88,7 @@ public class JTKPieChartDataset implements Serializable, MessageListener {
    * Handle received messages.
    * @param inMessage the message
    */
+  @Override
   public final void onMessage(final Message inMessage) {
     //System.out.println("Received message...");
     if (inMessage instanceof TextMessage) {

@@ -32,9 +32,9 @@ public class JTKLogViewerApp extends SingleFrameApplication {
     }
 
     /**
-     * This method is to initialize the specified window by injecting resources.
-     * Windows shown in our application come fully initialized from the GUI
-     * builder, so this additional configuration is not needed.
+     * This method is to initialize the specified window by injecting resources.Windows shown in our application come fully initialized from the GUI
+ builder, so this additional configuration is not needed.
+   * @param root
      */
     @Override protected void configureWindow(java.awt.Window root) {
     }
@@ -49,6 +49,7 @@ public class JTKLogViewerApp extends SingleFrameApplication {
 
     /**
      * Main method launching the application.
+   * @param args
      */
     public static void main(String[] args) {
         launch(JTKLogViewerApp.class, args);

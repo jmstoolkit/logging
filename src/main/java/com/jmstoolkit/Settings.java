@@ -42,7 +42,7 @@ public class Settings {
 
 
   /**
-   * Adds a value to a list property and returns a List<String> with all the
+   * Adds a value to a list property and returns a List with all the
    * values.
    *
    * @param inProperties: properties to use
@@ -69,7 +69,7 @@ public class Settings {
 
   public static List<String> getSettings(final Properties inProperties,
     final String inKey) {
-    List<String> settings = new ArrayList<String>();
+    List<String> settings = new ArrayList<>();
     if (inProperties.containsKey(inKey)) {
       final String allElements = inProperties.getProperty(inKey);
       settings = Arrays.asList(allElements.split(ELEMENT_SEPARATOR));

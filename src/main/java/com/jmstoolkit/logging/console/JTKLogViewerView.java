@@ -64,6 +64,7 @@ public class JTKLogViewerView extends FrameView {
       resourceMap.getInteger("StatusBar.messageTimeout");
     messageTimer = new Timer(messageTimeout, new ActionListener() {
 
+      @Override
       public void actionPerformed(final ActionEvent evt) {
         statusMessageLabel.setText("");
       }
@@ -76,6 +77,7 @@ public class JTKLogViewerView extends FrameView {
     }
     busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
 
+      @Override
       public void actionPerformed(final ActionEvent evt) {
         busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
         statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
@@ -90,30 +92,37 @@ public class JTKLogViewerView extends FrameView {
       new TaskMonitor(getApplication().getContext());
     taskMonitor.addPropertyChangeListener(new PropertyChangeListener() {
 
+      @Override
       public void propertyChange(final PropertyChangeEvent evt) {
         final String propertyName = evt.getPropertyName();
-        if ("started".equals(propertyName)) {
-          if (!busyIconTimer.isRunning()) {
-            statusAnimationLabel.setIcon(busyIcons[0]);
-            busyIconIndex = 0;
-            busyIconTimer.start();
-          }
-          progressBar.setVisible(true);
-          progressBar.setIndeterminate(true);
-        } else if ("done".equals(propertyName)) {
-          busyIconTimer.stop();
-          statusAnimationLabel.setIcon(idleIcon);
-          progressBar.setVisible(false);
-          progressBar.setValue(0);
-        } else if ("message".equals(propertyName)) {
-          final String text = (String) (evt.getNewValue());
-          statusMessageLabel.setText((text == null) ? "" : text);
-          messageTimer.restart();
-        } else if ("progress".equals(propertyName)) {
-          final int value = (Integer) (evt.getNewValue());
-          progressBar.setVisible(true);
-          progressBar.setIndeterminate(false);
-          progressBar.setValue(value);
+        if (null != propertyName) switch (propertyName) {
+          case "started":
+            if (!busyIconTimer.isRunning()) {
+              statusAnimationLabel.setIcon(busyIcons[0]);
+              busyIconIndex = 0;
+              busyIconTimer.start();
+            } progressBar.setVisible(true);
+            progressBar.setIndeterminate(true);
+            break;
+          case "done":
+            busyIconTimer.stop();
+            statusAnimationLabel.setIcon(idleIcon);
+            progressBar.setVisible(false);
+            progressBar.setValue(0);
+            break;
+          case "message":
+            final String text = (String) (evt.getNewValue());
+            statusMessageLabel.setText((text == null) ? "" : text);
+            messageTimer.restart();
+            break;
+          case "progress":
+            final int value = (Integer) (evt.getNewValue());
+            progressBar.setVisible(true);
+            progressBar.setIndeterminate(false);
+            progressBar.setValue(value);
+            break;
+          default:
+            break;
         }
       }
     });
@@ -364,7 +373,7 @@ public class JTKLogViewerView extends FrameView {
   private final Icon[] busyIcons = new Icon[15];
   private int busyIconIndex = 0;
   private JDialog aboutBox;
-  private Properties appProperties = new Properties();
+  private final Properties appProperties = new Properties();
 
 
   /** Initialize the Spring application context. */

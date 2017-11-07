@@ -18,7 +18,6 @@ package com.jmstoolkit.logging.console;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.text.SimpleDateFormat;
-import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 import com.jmstoolkit.logging.JTKLogRecord;
 import java.util.ArrayList;
@@ -32,11 +31,11 @@ public class LogRecordTableModel extends AbstractTableModel {
 
   private static final SimpleDateFormat TIMESTAMP =
     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-  private List<JTKLogRecord> data = new ArrayList<JTKLogRecord>();
+  private List<JTKLogRecord> data = new ArrayList<>();
   private PropertyChangeSupport propertySupport;
   private static final String PROP_DATA = "data";
 
-  private final static String[] columnName = new String[] {
+  private final static String[] COLUMN_NAME = new String[] {
     "date",
     "host",
     "level",
@@ -59,14 +58,17 @@ public class LogRecordTableModel extends AbstractTableModel {
     getPropertySupport().removePropertyChangeListener(inListener);
   }
 
+  @Override
   public final int getRowCount() {
     return getData().size();
   }
 
+  @Override
   public final int getColumnCount() {
-    return columnName.length;
+    return COLUMN_NAME.length;
   }
 
+  @Override
   public final Object getValueAt(final int rowIndex, final int columnIndex) {
     final Object[] record = data.toArray();
     final JTKLogRecord logrec = (JTKLogRecord) record[rowIndex];
@@ -100,7 +102,7 @@ public class LogRecordTableModel extends AbstractTableModel {
 
   @Override
   public final String getColumnName(int column) {
-    return columnName[column];
+    return COLUMN_NAME[column];
   }
 
   /**
@@ -111,7 +113,7 @@ public class LogRecordTableModel extends AbstractTableModel {
   }
 
   /**
-   * @param data the data to set
+   * @param newData the data to set
    */
   public final void setData(List<JTKLogRecord> newData) {
     List<JTKLogRecord> oldData = data;
@@ -128,7 +130,7 @@ public class LogRecordTableModel extends AbstractTableModel {
   }
 
   /**
-   * @param propertySupport the propertySupport to set
+   * @param inPropertySupport the propertySupport to set
    */
   public final void setPropertySupport(
     final PropertyChangeSupport inPropertySupport) {
