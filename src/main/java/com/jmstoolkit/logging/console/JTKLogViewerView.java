@@ -12,7 +12,6 @@
  * on the World Wide Web for more details:
  * http://www.fsf.org/licensing/licenses/gpl.txt
  */
-
 package com.jmstoolkit.logging.console;
 
 import com.jmstoolkit.JTKException;
@@ -42,13 +41,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class JTKLogViewerView extends FrameView {
 
-  /** Logger for this class. */
+  /**
+   * Logger for this class.
+   */
   private static final Logger LOGGER = Logger.getLogger("com.jmstoolkit");
-  /** Spring application context. */
+  /**
+   * Spring application context.
+   */
   private ClassPathXmlApplicationContext applicationContext;
 
   /**
    * Constructor.
+   *
    * @param app the application
    */
   public JTKLogViewerView(final SingleFrameApplication app) {
@@ -60,8 +64,8 @@ public class JTKLogViewerView extends FrameView {
     // status bar initialization - message timeout,
     // idle icon and busy animation, etc
     final ResourceMap resourceMap = getResourceMap();
-    final int messageTimeout =
-      resourceMap.getInteger("StatusBar.messageTimeout");
+    final int messageTimeout
+      = resourceMap.getInteger("StatusBar.messageTimeout");
     messageTimer = new Timer(messageTimeout, new ActionListener() {
 
       @Override
@@ -70,8 +74,8 @@ public class JTKLogViewerView extends FrameView {
       }
     });
     messageTimer.setRepeats(false);
-    final int busyAnimationRate =
-      resourceMap.getInteger("StatusBar.busyAnimationRate");
+    final int busyAnimationRate
+      = resourceMap.getInteger("StatusBar.busyAnimationRate");
     for (int i = 0; i < busyIcons.length; i++) {
       busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
     }
@@ -88,47 +92,52 @@ public class JTKLogViewerView extends FrameView {
     progressBar.setVisible(false);
 
     // connecting action tasks to status bar via TaskMonitor
-    final TaskMonitor taskMonitor =
-      new TaskMonitor(getApplication().getContext());
+    final TaskMonitor taskMonitor
+      = new TaskMonitor(getApplication().getContext());
     taskMonitor.addPropertyChangeListener(new PropertyChangeListener() {
 
       @Override
       public void propertyChange(final PropertyChangeEvent evt) {
         final String propertyName = evt.getPropertyName();
-        if (null != propertyName) switch (propertyName) {
-          case "started":
-            if (!busyIconTimer.isRunning()) {
-              statusAnimationLabel.setIcon(busyIcons[0]);
-              busyIconIndex = 0;
-              busyIconTimer.start();
-            } progressBar.setVisible(true);
-            progressBar.setIndeterminate(true);
-            break;
-          case "done":
-            busyIconTimer.stop();
-            statusAnimationLabel.setIcon(idleIcon);
-            progressBar.setVisible(false);
-            progressBar.setValue(0);
-            break;
-          case "message":
-            final String text = (String) (evt.getNewValue());
-            statusMessageLabel.setText((text == null) ? "" : text);
-            messageTimer.restart();
-            break;
-          case "progress":
-            final int value = (Integer) (evt.getNewValue());
-            progressBar.setVisible(true);
-            progressBar.setIndeterminate(false);
-            progressBar.setValue(value);
-            break;
-          default:
-            break;
+        if (null != propertyName) {
+          switch (propertyName) {
+            case "started":
+              if (!busyIconTimer.isRunning()) {
+                statusAnimationLabel.setIcon(busyIcons[0]);
+                busyIconIndex = 0;
+                busyIconTimer.start();
+              }
+              progressBar.setVisible(true);
+              progressBar.setIndeterminate(true);
+              break;
+            case "done":
+              busyIconTimer.stop();
+              statusAnimationLabel.setIcon(idleIcon);
+              progressBar.setVisible(false);
+              progressBar.setValue(0);
+              break;
+            case "message":
+              final String text = (String) (evt.getNewValue());
+              statusMessageLabel.setText((text == null) ? "" : text);
+              messageTimer.restart();
+              break;
+            case "progress":
+              final int value = (Integer) (evt.getNewValue());
+              progressBar.setVisible(true);
+              progressBar.setIndeterminate(false);
+              progressBar.setValue(value);
+              break;
+            default:
+              break;
+          }
         }
       }
     });
   }
 
-  /** Show the about box. */
+  /**
+   * Show the about box.
+   */
   @Action
   public final void showAboutBox() {
     if (aboutBox == null) {
@@ -139,10 +148,10 @@ public class JTKLogViewerView extends FrameView {
     JTKLogViewerApp.getApplication().show(aboutBox);
   }
 
-  /** This method is called from within the constructor to
-   * initialize the form.
-   * WARNING: Do NOT modify this code. The content of this method is
-   * always regenerated by the Form Editor.
+  /**
+   * This method is called from within the constructor to initialize the form.
+   * WARNING: Do NOT modify this code. The content of this method is always
+   * regenerated by the Form Editor.
    */
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -186,7 +195,7 @@ public class JTKLogViewerView extends FrameView {
     logMessageTextField.setName("logMessageTextField"); // NOI18N
 
     loggerLevelComboBox.setEditable(true);
-    loggerLevelComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "severe", "warning", "info", "config", "fine", "finer", "finest", " ", " " }));
+    loggerLevelComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"severe", "warning", "info", "config", "fine", "finer", "finest", " ", " "}));
     loggerLevelComboBox.setToolTipText(resourceMap.getString("loggerLevelComboBox.toolTipText")); // NOI18N
     loggerLevelComboBox.setName("loggerLevelComboBox"); // NOI18N
 
@@ -194,19 +203,19 @@ public class JTKLogViewerView extends FrameView {
     sendMessagePanel.setLayout(sendMessagePanelLayout);
     sendMessagePanelLayout.setHorizontalGroup(
       sendMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(sendMessagePanelLayout.createSequentialGroup()
-        .addComponent(loggerLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(logMessageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(sendLogMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGroup(sendMessagePanelLayout.createSequentialGroup()
+          .addComponent(loggerLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addComponent(logMessageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addComponent(sendLogMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
     sendMessagePanelLayout.setVerticalGroup(
       sendMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(sendMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-        .addComponent(loggerLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addComponent(logMessageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addComponent(sendLogMessageButton))
+        .addGroup(sendMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(loggerLevelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(logMessageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(sendLogMessageButton))
     );
 
     jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
@@ -244,11 +253,11 @@ public class JTKLogViewerView extends FrameView {
     levelsPieChart.setLayout(levelsPieChartLayout);
     levelsPieChartLayout.setHorizontalGroup(
       levelsPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 480, Short.MAX_VALUE)
+        .addGap(0, 480, Short.MAX_VALUE)
     );
     levelsPieChartLayout.setVerticalGroup(
       levelsPieChartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 230, Short.MAX_VALUE)
+        .addGap(0, 230, Short.MAX_VALUE)
     );
 
     jSplitPane1.setLeftComponent(levelsPieChart);
@@ -257,18 +266,18 @@ public class JTKLogViewerView extends FrameView {
     mainPanel.setLayout(mainPanelLayout);
     mainPanelLayout.setHorizontalGroup(
       mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(mainPanelLayout.createSequentialGroup()
-        .addGap(37, 37, 37)
-        .addComponent(sendMessagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(36, Short.MAX_VALUE))
-      .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+        .addGroup(mainPanelLayout.createSequentialGroup()
+          .addGap(37, 37, 37)
+          .addComponent(sendMessagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addContainerGap(36, Short.MAX_VALUE))
+        .addComponent(jSplitPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
     );
     mainPanelLayout.setVerticalGroup(
       mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-        .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(sendMessagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+          .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addComponent(sendMessagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
     menuBar.setName("menuBar"); // NOI18N
@@ -306,26 +315,26 @@ public class JTKLogViewerView extends FrameView {
     statusPanel.setLayout(statusPanelLayout);
     statusPanelLayout.setHorizontalGroup(
       statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
-      .addGroup(statusPanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .addComponent(statusMessageLabel)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 312, Short.MAX_VALUE)
-        .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(statusAnimationLabel)
-        .addContainerGap())
+        .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+        .addGroup(statusPanelLayout.createSequentialGroup()
+          .addContainerGap()
+          .addComponent(statusMessageLabel)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 312, Short.MAX_VALUE)
+          .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+          .addComponent(statusAnimationLabel)
+          .addContainerGap())
     );
     statusPanelLayout.setVerticalGroup(
       statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(statusPanelLayout.createSequentialGroup()
-        .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(statusMessageLabel)
-          .addComponent(statusAnimationLabel)
-          .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(3, 3, 3))
+        .addGroup(statusPanelLayout.createSequentialGroup()
+          .addComponent(statusPanelSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(statusMessageLabel)
+            .addComponent(statusAnimationLabel)
+            .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGap(3, 3, 3))
     );
 
     pieChartDataset = (JTKPieChartDataset) this.getApplicationContext().getBean("pieChartDataService");
@@ -340,14 +349,14 @@ public class JTKLogViewerView extends FrameView {
     setStatusBar(statusPanel);
   }// </editor-fold>//GEN-END:initComponents
 
-    private void pieChartDatasetPropertyChange(final PropertyChangeEvent evt) {
-      //GEN-FIRST:event_pieChartDatasetPropertyChange
-      levelsPieChart.setDataset(pieChartDataset.getPieDataset());
-      levelsPieChart.setSubtitle("Total messages: " +
-        pieChartDataset.getTotal());
-      logRecordTableModel.getData().add(pieChartDataset.getRecord());
-      logRecordTable.revalidate();
-    }//GEN-LAST:event_pieChartDatasetPropertyChange
+  private void pieChartDatasetPropertyChange(final PropertyChangeEvent evt) {
+    //GEN-FIRST:event_pieChartDatasetPropertyChange
+    levelsPieChart.setDataset(pieChartDataset.getPieDataset());
+    levelsPieChart.setSubtitle("Total messages: "
+      + pieChartDataset.getTotal());
+    logRecordTableModel.getData().add(pieChartDataset.getRecord());
+    logRecordTable.revalidate();
+  }//GEN-LAST:event_pieChartDatasetPropertyChange
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JSplitPane jSplitPane1;
@@ -375,8 +384,9 @@ public class JTKLogViewerView extends FrameView {
   private JDialog aboutBox;
   private final Properties appProperties = new Properties();
 
-
-  /** Initialize the Spring application context. */
+  /**
+   * Initialize the Spring application context.
+   */
   private void _init() {
 
     try {
@@ -395,14 +405,16 @@ public class JTKLogViewerView extends FrameView {
       System.out.println(se.toStringWithStackTrace());
     }
     this.setApplicationContext(new ClassPathXmlApplicationContext(
-             new String[]{"/infrastructure-context.xml",
-               "/com/jmstoolkit/logging/console/mdb-context.xml",
-               "/jmx-context.xml",
-               "/logging-context.xml"}));
+      new String[]{"/infrastructure-context.xml",
+        "/com/jmstoolkit/logging/console/mdb-context.xml",
+        "/jmx-context.xml",
+        "/logging-context.xml"}));
     this.getApplicationContext().start();
   }
 
-  /** Send a message.
+  /**
+   * Send a message.
+   *
    * @return the Task handling this
    */
   @Action
@@ -425,15 +437,23 @@ public class JTKLogViewerView extends FrameView {
     this.applicationContext = inApplicationContext;
   }
 
-  /** Task for sending messages asynchronously.*/
+  /**
+   * Task for sending messages asynchronously.
+   */
   private class SendMessageTask extends Task<Object, Void> {
 
-    /** Message text. */
+    /**
+     * Message text.
+     */
     private String message;
-    /** Logger level. */
+    /**
+     * Logger level.
+     */
     private String level;
 
-    /** Constructor.
+    /**
+     * Constructor.
+     *
      * @param app The application containing this task
      */
     SendMessageTask(final Application app) {

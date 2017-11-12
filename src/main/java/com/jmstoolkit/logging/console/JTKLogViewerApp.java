@@ -12,8 +12,6 @@
  * on the World Wide Web for more details:
  * http://www.fsf.org/licensing/licenses/gpl.txt
  */
-
-
 package com.jmstoolkit.logging.console;
 
 import org.jdesktop.application.Application;
@@ -24,34 +22,40 @@ import org.jdesktop.application.SingleFrameApplication;
  */
 public class JTKLogViewerApp extends SingleFrameApplication {
 
-    /**
-     * At startup create and show the main frame of the application.
-     */
-    @Override protected void startup() {
-        show(new JTKLogViewerView(this));
-    }
+  /**
+   * At startup create and show the main frame of the application.
+   */
+  @Override
+  protected void startup() {
+    show(new JTKLogViewerView(this));
+  }
 
-    /**
-     * This method is to initialize the specified window by injecting resources.Windows shown in our application come fully initialized from the GUI
- builder, so this additional configuration is not needed.
-   * @param root
-     */
-    @Override protected void configureWindow(java.awt.Window root) {
-    }
+  /**
+   * This method is to initialize the specified window by injecting
+   * resources.Windows shown in our application come fully initialized from the
+   * GUI builder, so this additional configuration is not needed.
+   *
+   * @param root Root java.awt.Window
+   */
+  @Override
+  protected void configureWindow(java.awt.Window root) {
+  }
 
-    /**
-     * A convenient static getter for the application instance.
-     * @return the instance of JTKLogViewerApp
-     */
-    public static JTKLogViewerApp getApplication() {
-        return Application.getInstance(JTKLogViewerApp.class);
-    }
+  /**
+   * A convenient static getter for the application instance.
+   *
+   * @return the instance of JTKLogViewerApp
+   */
+  public static JTKLogViewerApp getApplication() {
+    return Application.getInstance(JTKLogViewerApp.class);
+  }
 
-    /**
-     * Main method launching the application.
-   * @param args
-     */
-    public static void main(String[] args) {
-        launch(JTKLogViewerApp.class, args);
-    }
+  /**
+   * Main method launching the application.
+   *
+   * @param args Comand line arguments
+   */
+  public static void main(String[] args) {
+    launch(JTKLogViewerApp.class, args);
+  }
 }

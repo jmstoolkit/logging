@@ -12,7 +12,6 @@
  * on the World Wide Web for more details:
  * http://www.fsf.org/licensing/licenses/gpl.txt
  */
-
 package com.jmstoolkit.logging.console;
 
 import java.io.Serializable;
@@ -46,7 +45,10 @@ public class JTKPieChartDataset implements Serializable, MessageListener {
   public static final String PROP_PIE_DATASET = "pieDataset";
   private DefaultPieDataset pieDataset = new DefaultPieDataset();
   private PropertyChangeSupport propertySupport;
-  /** Store count of types of messages. When handling logger output, key = "log level". */
+  /**
+   * Store count of types of messages. When handling logger output, key = "log
+   * level".
+   */
   private Map<String, Integer> typeCount = new HashMap<>();
   private JTKLogRecord record;
 
@@ -86,6 +88,7 @@ public class JTKPieChartDataset implements Serializable, MessageListener {
 
   /**
    * Handle received messages.
+   *
    * @param inMessage the message
    */
   @Override
@@ -107,8 +110,8 @@ public class JTKPieChartDataset implements Serializable, MessageListener {
         recordDoc = saxReader.read(new StringReader(rawMessage));
         final String level = recordDoc.valueOf("//record/level");
         final JTKLogRecord newrecord = new JTKLogRecord(
-                Level.parse(level),
-                recordDoc.valueOf("//record/message"));
+          Level.parse(level),
+          recordDoc.valueOf("//record/message"));
         newrecord.setMillis(
           Long.parseLong(recordDoc.valueOf("//record/millis")));
         newrecord.setLoggerName(recordDoc.valueOf("//record/logger"));

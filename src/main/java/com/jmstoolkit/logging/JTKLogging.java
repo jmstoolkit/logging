@@ -22,25 +22,31 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author scott
+ * @author Scott Douglass
  */
 public class JTKLogging {
 
-  /** */
+  /**
+   *    */
   private Handler logHandler;
-  /** */
+  /**
+   *    */
   private Properties loggerProperties;
-  /** */
+  /**
+   *    */
   private Boolean useParentHandlers = true;
-  /** */
+  /**
+   *    */
   private Formatter formatter;
-  /** */
+  /**
+   *    */
   private Handler consoleHandler;
-  /** */
+  /**
+   *    */
   public static final String CONSOLE_LOGGER_NAME = "JTKCONSOLE";
-  /** */
+  /**
+   *    */
   private static final Logger CONSOLE = Logger.getLogger(CONSOLE_LOGGER_NAME);
-
 
   /**
    *
@@ -50,7 +56,7 @@ public class JTKLogging {
 
   /**
    *
-   * @param inProperties
+   * @param inProperties Properties for logging
    */
   public JTKLogging(final Properties inProperties) {
     loggerProperties = inProperties;
@@ -62,8 +68,8 @@ public class JTKLogging {
    */
   private void createLoggers() {
     for (Object loggerName : this.getLoggerProperties().keySet()) {
-      final String levelName =
-        this.getLoggerProperties().getProperty((String) loggerName);
+      final String levelName
+        = this.getLoggerProperties().getProperty((String) loggerName);
       try {
         final Level level = Level.parse(levelName);
         final Logger logger = Logger.getLogger((String) loggerName);
@@ -77,7 +83,7 @@ public class JTKLogging {
       } catch (IllegalArgumentException e) {
         CONSOLE.log(Level.SEVERE,
           "Failed to set Level {0} for Logger {1}",
-          new Object[] {levelName, loggerName});
+          new Object[]{levelName, loggerName});
       }
     }
   }
